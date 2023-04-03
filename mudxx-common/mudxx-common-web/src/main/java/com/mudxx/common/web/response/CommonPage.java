@@ -1,6 +1,8 @@
 package com.mudxx.common.web.response;
 
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.util.List;
 
@@ -8,11 +10,17 @@ import java.util.List;
  * 分页数据封装类
  * @author laiwen
  */
+@ApiModel(description = "通用分页返回对象")
 public class CommonPage<T> {
+    @ApiModelProperty(value = "当前页")
     private Integer pageNum;
+    @ApiModelProperty(value = "分页大小")
     private Integer pageSize;
+    @ApiModelProperty(value = "分页总数")
     private Integer totalPage;
+    @ApiModelProperty(value = "总数")
     private Long total;
+    @ApiModelProperty(value = "当前页结果集")
     private List<T> list;
 
     /**

@@ -4,15 +4,21 @@ import cn.hutool.json.JSONConfig;
 import cn.hutool.json.JSONUtil;
 import com.mudxx.common.exceptiion.code.CommonErrorCode;
 import com.mudxx.common.exceptiion.code.IErrorCode;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * 通用返回对象
  *
  * @author laiwen
  */
+@ApiModel(description = "通用返回对象")
 public class CommonResult<T> {
+    @ApiModelProperty(value = "错误码")
     private String code;
+    @ApiModelProperty(value = "提示信息")
     private String message;
+    @ApiModelProperty(value = "返回数据")
     private T data;
 
     protected CommonResult() {
