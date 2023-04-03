@@ -3,13 +3,18 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>mudxx-common</artifactId>
+        <artifactId>mudxx-core</artifactId>
         <groupId>com.mudxx</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>mudxx-common-web</artifactId>
+    <artifactId>mudxx-component</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>mudxx-component-redis</module>
+        <module>mudxx-component-mq</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -17,7 +22,6 @@
     </properties>
 
     <dependencies>
-        <!--系统模块工程-->
         <dependency>
             <groupId>com.mudxx</groupId>
             <artifactId>mudxx-common-constants</artifactId>
@@ -28,28 +32,6 @@
             <artifactId>mudxx-common-utils</artifactId>
             <version>${mudxx.core.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.mudxx</groupId>
-            <artifactId>mudxx-common-exception</artifactId>
-            <version>${mudxx.core.version}</version>
-        </dependency>
-        <!--Springboot-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>
-        <!--分页工具-->
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper</artifactId>
-            <version>5.1.8</version>
-            <scope>compile</scope>
-        </dependency>
-
     </dependencies>
 
 </project>

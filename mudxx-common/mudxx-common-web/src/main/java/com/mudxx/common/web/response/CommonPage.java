@@ -1,4 +1,4 @@
-package com.mudxx.common.web.api;
+package com.mudxx.common.web.response;
 
 import com.github.pagehelper.PageInfo;
 
