@@ -1,17 +1,22 @@
 package com.mudxx.common.web.response;
 
+import cn.hutool.json.JSONConfig;
+import cn.hutool.json.JSONUtil;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * 分页数据封装类
+ *
  * @author laiwen
  */
 @ApiModel(description = "通用分页返回对象")
-public class CommonPage<T> {
+public class CommonPage<T> implements Serializable {
+    private static final long serialVersionUID = -6201040376900598868L;
     @ApiModelProperty(value = "当前页")
     private Integer pageNum;
     @ApiModelProperty(value = "分页大小")
@@ -35,6 +40,11 @@ public class CommonPage<T> {
         result.setTotal(pageInfo.getTotal());
         result.setList(pageInfo.getList());
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return JSONUtil.toJsonStr(this, new JSONConfig().setIgnoreNullValue(false));
     }
 
     public Integer getPageNum() {

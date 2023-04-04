@@ -7,13 +7,16 @@ import com.mudxx.common.exceptiion.code.IErrorCode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.io.Serializable;
+
 /**
  * 通用返回对象
  *
  * @author laiwen
  */
 @ApiModel(description = "通用返回对象")
-public class CommonResult<T> {
+public class CommonResult<T> implements Serializable {
+    private static final long serialVersionUID = -7976826315846369771L;
     @ApiModelProperty(value = "错误码")
     private String code;
     @ApiModelProperty(value = "提示信息")
@@ -91,6 +94,21 @@ public class CommonResult<T> {
      */
     public static <T> CommonResult<T> failed(IErrorCode errorCode) {
         return failed(errorCode, null);
+    }
+
+    /**
+     * 失败返回结果
+     * @param message 提示信息
+     */
+    public static <T> CommonResult<T> failed(String message) {
+        return failed(CommonErrorCode.SYSTEM_ERROR, message);
+    }
+
+    /**
+     * 失败返回结果
+     */
+    public static <T> CommonResult<T> failed() {
+        return failed(CommonErrorCode.SYSTEM_ERROR);
     }
 
     /**

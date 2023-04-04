@@ -23,6 +23,10 @@
             <artifactId>mudxx-common-constants</artifactId>
             <version>${mudxx.core.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
