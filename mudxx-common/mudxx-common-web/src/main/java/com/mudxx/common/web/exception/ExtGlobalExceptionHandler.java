@@ -6,13 +6,14 @@ import com.mudxx.common.exceptiion.code.biz.BizException;
 import com.mudxx.common.web.response.CommonResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.security.SignatureException;
@@ -21,7 +22,8 @@ import java.security.SignatureException;
  * @author laiw
  * @date 2023/3/30 17:23
  */
-@ControllerAdvice
+@Order(0)
+@RestControllerAdvice
 public class ExtGlobalExceptionHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExtGlobalExceptionHandler.class);
 
