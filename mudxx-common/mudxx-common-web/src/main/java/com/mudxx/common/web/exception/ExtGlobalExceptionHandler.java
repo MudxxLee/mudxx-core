@@ -1,8 +1,8 @@
 package com.mudxx.common.web.exception;
 
-import com.mudxx.common.exceptiion.code.CommonErrorCode;
-import com.mudxx.common.exceptiion.code.biz.BizErrorCode;
-import com.mudxx.common.exceptiion.code.biz.BizException;
+import com.mudxx.common.exception.code.CommonErrorCode;
+import com.mudxx.common.exception.code.biz.BizErrorCode;
+import com.mudxx.common.exception.code.biz.BizException;
 import com.mudxx.common.web.response.CommonResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

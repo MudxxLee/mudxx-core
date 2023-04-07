@@ -2,8 +2,8 @@ package com.mudxx.common.web.response;
 
 import cn.hutool.json.JSONConfig;
 import cn.hutool.json.JSONUtil;
-import com.mudxx.common.exceptiion.code.CommonErrorCode;
-import com.mudxx.common.exceptiion.code.IErrorCode;
+import com.mudxx.common.exception.code.CommonErrorCode;
+import com.mudxx.common.exception.code.IErrorCode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -93,7 +93,7 @@ public class CommonResult<T> implements Serializable {
      * @param errorCode 错误码
      */
     public static <T> CommonResult<T> failed(IErrorCode errorCode) {
-        return failed(errorCode, null);
+        return new CommonResult<T>(errorCode, null);
     }
 
     /**
@@ -101,7 +101,7 @@ public class CommonResult<T> implements Serializable {
      * @param message 提示信息
      */
     public static <T> CommonResult<T> failed(String message) {
-        return failed(CommonErrorCode.SYSTEM_ERROR, message);
+        return failed(CommonErrorCode.SYSTEM_ERROR.getCode(), message);
     }
 
     /**
@@ -116,7 +116,7 @@ public class CommonResult<T> implements Serializable {
      * @param message 提示信息
      */
     public static <T> CommonResult<T> unauthorized(String message) {
-        return failed(CommonErrorCode.UNAUTHORIZED, message);
+        return failed(CommonErrorCode.UNAUTHORIZED.getCode(), message);
     }
 
     /**
@@ -131,7 +131,7 @@ public class CommonResult<T> implements Serializable {
      * @param message 提示信息
      */
     public static <T> CommonResult<T> forbidden(String message) {
-        return failed(CommonErrorCode.FORBIDDEN, message);
+        return failed(CommonErrorCode.FORBIDDEN.getCode(), message);
     }
 
     /**
@@ -146,7 +146,7 @@ public class CommonResult<T> implements Serializable {
      * @param message 提示信息
      */
     public static <T> CommonResult<T> notfound(String message) {
-        return failed(CommonErrorCode.NOT_FOUND, message);
+        return failed(CommonErrorCode.NOT_FOUND.getCode(), message);
     }
 
     /**

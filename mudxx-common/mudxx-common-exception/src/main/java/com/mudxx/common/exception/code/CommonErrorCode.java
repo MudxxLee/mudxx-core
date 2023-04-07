@@ -1,4 +1,4 @@
-package com.mudxx.common.exceptiion.code;
+package com.mudxx.common.exception.code;
 
 /**
  * 枚举了一些常用API操作码
