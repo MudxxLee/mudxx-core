@@ -1,6 +1,6 @@
-package com.mudxx.common.exceptiion.function;
+package com.mudxx.common.exception.function;
 
-import com.mudxx.common.exceptiion.code.IErrorCode;
+import com.mudxx.common.exception.code.IErrorCode;
 
 /**
  * 抛异常接口
@@ -16,6 +16,6 @@ public interface ThrowExtExceptionFunction {
      * @param message 异常信息
      * @param args 扩展信息
      */
-    void throwMessage(IErrorCode errorCode, String message, String... args);
+    void throwMessage(IErrorCode errorCode, String message, Object... args);
 
 }

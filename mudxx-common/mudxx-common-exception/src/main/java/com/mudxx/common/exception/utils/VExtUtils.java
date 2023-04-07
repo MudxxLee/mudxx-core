@@ -1,9 +1,9 @@
-package com.mudxx.common.exceptiion.utils;
+package com.mudxx.common.exception.utils;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.mudxx.common.exceptiion.code.biz.BizException;
-import com.mudxx.common.exceptiion.function.ThrowExtExceptionFunction;
+import com.mudxx.common.exception.code.biz.BizException;
+import com.mudxx.common.exception.function.ThrowExtExceptionFunction;
 
 /**
  * @author laiw

@@ -1,7 +1,7 @@
-package com.mudxx.common.exceptiion.code.biz;
+package com.mudxx.common.exception.code.biz;
 
 import cn.hutool.core.util.StrUtil;
-import com.mudxx.common.exceptiion.code.IErrorCode;
+import com.mudxx.common.exception.code.IErrorCode;
 
 /**
  * @author laiw
@@ -59,12 +59,22 @@ public class BizException extends RuntimeException {
 
     /**
      * 使用自定义消息
+     * @param errorCode 异常枚举
+     * @param args args
+     */
+    public BizException(IErrorCode errorCode, Object... args) {
+        super(args == null ? errorCode.getMessage() : StrUtil.format(errorCode.getMessage(), args));
+        this.code = errorCode.getCode();
+    }
+
+    /**
+     * 使用自定义消息
      * @param code 枚举值
      * @param message 详情
      * @param args args
      */
     public BizException(String code, String message, Object... args) {
-        super(message == null ? message : StrUtil.format(message, args));
+        super(args == null ? message : StrUtil.format(message, args));
         this.code = code;
     }
 

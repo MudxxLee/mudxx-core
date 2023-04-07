@@ -1,6 +1,6 @@
-package com.mudxx.common.exceptiion.code.biz;
+package com.mudxx.common.exception.code.biz;
 
-import com.mudxx.common.exceptiion.code.IErrorCode;
+import com.mudxx.common.exception.code.IErrorCode;
 
 /**
  * 参数异常扩展
@@ -19,6 +19,10 @@ public enum ParameterErrorCode implements IErrorCode {
     INVALID_ERROR("5000102", "%s 值无效"),
     NOT_IN_RANGE("5000103", "%s 不在取值范围内 [%s]"),
 
+
+
+
+    ILLEGAL_CHARACTER("5000199", "参数中含有非法字符"),
     ;
 
 

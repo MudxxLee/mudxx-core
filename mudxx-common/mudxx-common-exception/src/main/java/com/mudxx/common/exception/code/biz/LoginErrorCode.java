@@ -1,6 +1,6 @@
-package com.mudxx.common.exceptiion.code.biz;
+package com.mudxx.common.exception.code.biz;
 
-import com.mudxx.common.exceptiion.code.IErrorCode;
+import com.mudxx.common.exception.code.IErrorCode;
 
 /**
  * 登录异常扩展

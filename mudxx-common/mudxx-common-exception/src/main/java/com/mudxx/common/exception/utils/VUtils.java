@@ -1,9 +1,9 @@
-package com.mudxx.common.exceptiion.utils;
+package com.mudxx.common.exception.utils;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.mudxx.common.exceptiion.code.biz.BizException;
-import com.mudxx.common.exceptiion.function.ThrowExceptionFunction;
+import com.mudxx.common.exception.code.biz.BizException;
+import com.mudxx.common.exception.function.ThrowExceptionFunction;
 
 /**
  * @author laiw
@@ -16,9 +16,9 @@ public class VUtils {
      * @param bool boolean
      */
     public static ThrowExceptionFunction isTrue(boolean bool) {
-        return (errorCode) -> {
+        return (errorCode, args) -> {
             if (bool) {
-                throw new BizException(errorCode);
+                throw new BizException(errorCode, args);
             }
         };
     }

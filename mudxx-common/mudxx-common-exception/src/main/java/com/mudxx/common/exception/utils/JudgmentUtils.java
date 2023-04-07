@@ -1,8 +1,8 @@
-package com.mudxx.common.exceptiion.utils;
+package com.mudxx.common.exception.utils;
 
 import cn.hutool.core.util.StrUtil;
-import com.mudxx.common.exceptiion.function.BranchHandleFunction;
-import com.mudxx.common.exceptiion.function.PresentOrElseHandler;
+import com.mudxx.common.exception.function.BranchHandleFunction;
+import com.mudxx.common.exception.function.PresentOrElseHandler;
 
 /**
  * @author laiw

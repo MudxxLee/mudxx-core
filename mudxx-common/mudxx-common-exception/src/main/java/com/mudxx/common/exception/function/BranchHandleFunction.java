@@ -1,4 +1,4 @@
-package com.mudxx.common.exceptiion.function;
+package com.mudxx.common.exception.function;
 
 /**
  * 分支处理接口

@@ -1,4 +1,4 @@
-package com.mudxx.common.exceptiion.code;
+package com.mudxx.common.exception.code;
 
 /**
  * 封装API的错误码
