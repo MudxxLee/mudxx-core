@@ -11,6 +11,7 @@
     <modules>
         <module>mudxx-common</module>
         <module>mudxx-component</module>
+        <module>mudxx-tool</module>
     </modules>
 
     <properties>
