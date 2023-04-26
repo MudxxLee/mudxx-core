@@ -1,6 +1,5 @@
 package com.mudxx.common.exception.code.biz;
 
-import cn.hutool.core.util.StrUtil;
 import com.mudxx.common.exception.code.IErrorCode;
 
 /**
@@ -30,12 +29,14 @@ public class BizException extends RuntimeException {
 
     /**
      * 使用自定义消息
-     * @param message  详情
+     *
+     * @param message 详情
      */
     public BizException(String message) {
         super(message);
         this.code = BizErrorCode.BIZ_ERROR.getCode();
     }
+
     /**
      * 使用枚举传参
      *
@@ -50,7 +51,7 @@ public class BizException extends RuntimeException {
      * 使用自定义消息
      *
      * @param errorCode 异常枚举
-     * @param message  详情
+     * @param message   详情
      */
     public BizException(IErrorCode errorCode, String message) {
         super(message);
@@ -59,34 +60,37 @@ public class BizException extends RuntimeException {
 
     /**
      * 使用自定义消息
+     *
      * @param errorCode 异常枚举
-     * @param args args
+     * @param args      args
      */
     public BizException(IErrorCode errorCode, Object... args) {
-        super(args == null ? errorCode.getMessage() : StrUtil.format(errorCode.getMessage(), args));
+        super(args == null ? errorCode.getMessage() : String.format(errorCode.getMessage(), args));
         this.code = errorCode.getCode();
     }
 
     /**
      * 使用自定义消息
-     * @param code 枚举值
+     *
+     * @param code    枚举值
      * @param message 详情
-     * @param args args
+     * @param args    args
      */
     public BizException(String code, String message, Object... args) {
-        super(args == null ? message : StrUtil.format(message, args));
+        super(args == null ? message : String.format(message, args));
         this.code = code;
     }
 
     /**
      * #带data的BizException异常
-     * @param code 枚举值
+     *
+     * @param code    枚举值
      * @param message 详情
-     * @param data 数据
-     * @param args args
+     * @param data    数据
+     * @param args    args
      */
     public BizException(String code, String message, Object data, Object... args) {
-        super(args == null ? message : StrUtil.format(message, args));
+        super(args == null ? message : String.format(message, args));
         this.code = code;
         this.data = data;
     }

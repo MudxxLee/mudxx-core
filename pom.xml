@@ -12,6 +12,7 @@
         <module>mudxx-common</module>
         <module>mudxx-component</module>
         <module>mudxx-tool</module>
+        <module>mudxx-captcha</module>
     </modules>
 
     <properties>
@@ -20,6 +21,7 @@
         <hutool.version>5.8.11</hutool.version>
         <fastjson.version>1.2.83</fastjson.version>
         <commons.collections.version>3.2.1</commons.collections.version>
+        <slfj4.version>1.7.30</slfj4.version>
 
         <maven.plugins.version>3.8.1</maven.plugins.version>
         <maven.compiler.source>8</maven.compiler.source>
@@ -78,6 +80,12 @@
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
             <version>${commons.collections.version}</version>
+        </dependency>
+        <!--slf4j-api工具包-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slfj4.version}</version>
         </dependency>
 
     </dependencies>

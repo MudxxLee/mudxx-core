@@ -1,17 +1,21 @@
 package com.mudxx.component.redis;
 
+import cn.hutool.core.util.ObjectUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.RedisStringCommands;
 import org.springframework.data.redis.core.RedisCallback;
+import org.springframework.data.redis.core.SetOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.types.Expiration;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
  * string redis 工具类
+ *
  * @author laiw
  * @date 2023/3/31 10:32
  */
@@ -45,9 +49,10 @@ public class StringRedisUtils {
 
     /**
      * 缓存基本的对象，Integer、String、实体类等(单位:秒)
-     * @param key      缓存的键值
-     * @param value    缓存的值
-     * @param timeout  时间
+     *
+     * @param key     缓存的键值
+     * @param value   缓存的值
+     * @param timeout 时间
      */
     public void set(final String key, final String value, final long timeout) {
         set(key, value, timeout, TimeUnit.SECONDS);
@@ -65,6 +70,7 @@ public class StringRedisUtils {
 
     /**
      * 判断缓存是否存在
+     *
      * @param key 缓存键值
      */
     public boolean hasKey(final String key) {
@@ -73,18 +79,40 @@ public class StringRedisUtils {
 
     /**
      * 删除单个对象如果存在
+     *
      * @param key 缓存键值
      */
     public boolean removeIfExists(final String key) {
-        if(hasKey(key)) {
+        if (hasKey(key)) {
             return delete(key);
         }
         return false;
     }
 
     /**
+     * 删除单个对象
+     *
+     * @param key 缓存键值
+     */
+    public boolean delete(final String key) {
+        return Boolean.TRUE.equals(stringRedisTemplate.delete(key));
+    }
+
+    /**
+     * 根据前缀删除符合的对象
+     * keys的操作会导致数据库暂时被锁住，其他的请求都会被堵塞；业务量大的时候会出问题
+     *
+     * @param prefixKey 缓存键值的前缀
+     */
+    public long deleteKeys(final String prefixKey) {
+        Set<String> keys = stringRedisTemplate.keys(prefixKey + "*");
+        return ObjectUtil.defaultIfNull(stringRedisTemplate.delete(keys), 0L);
+    }
+
+    /**
      * 缓存自增
-     * @param key 需自增的key
+     *
+     * @param key   需自增的key
      * @param value 自增值
      * @return 自增后的值
      */
@@ -114,10 +142,21 @@ public class StringRedisUtils {
         return setIfNotExists(key, value, timeout, TimeUnit.SECONDS);
     }
 
+
     /**
      * 获取当前剩余过期时间
      *
-     * @param key     Redis键
+     * @param key Redis键
+     * @return
+     */
+    public Long getExpire(final String key) {
+        return stringRedisTemplate.getExpire(key);
+    }
+
+    /**
+     * 获取当前剩余过期时间
+     *
+     * @param key      Redis键
      * @param timeUnit 时间颗粒度
      * @return
      */
@@ -149,12 +188,24 @@ public class StringRedisUtils {
     }
 
     /**
-     * 删除单个对象
+     * 添加Set缓存
      *
-     * @param key
+     * @param key  Redis键
+     * @param args 添加的元素
      */
-    public boolean delete(final String key) {
-        return Boolean.TRUE.equals(stringRedisTemplate.delete(key));
+    public void addForSet(final String key, String... args) {
+        SetOperations<String, String> setOps = stringRedisTemplate.opsForSet();
+        setOps.add(key, args);
+    }
+
+    /**
+     * 获取Set缓存
+     *
+     * @param key Redis键
+     */
+    public Set<String> getForSet(final String key) {
+        SetOperations<String, String> setOps = stringRedisTemplate.opsForSet();
+        return setOps.members(key);
     }
 
 }
