@@ -1,0 +1,3 @@
+com.mudxx.captcha.core.service.impl.BlockPuzzleCaptchaServiceImpl
+com.mudxx.captcha.core.service.impl.ClickWordCaptchaServiceImpl
+com.mudxx.captcha.core.service.impl.DefaultCaptchaServiceImpl
