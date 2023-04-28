@@ -2,6 +2,8 @@ package com.mudxx.common.utils.crypt;
 
 
 import cn.hutool.core.util.StrUtil;
+import com.mudxx.common.utils.random.RandomUtil;
+import org.apache.commons.lang3.RandomUtils;
 import org.springframework.util.StringUtils;
 
 import javax.crypto.Cipher;
@@ -24,7 +26,7 @@ public class AESUtil {
      * @return
      */
     public static String getKey() {
-        return RandomUtils.getRandomString(16);
+        return RandomUtil.randomNumChar(16);
     }
 
 
@@ -134,7 +136,7 @@ public class AESUtil {
      * 测试
      */
     public static void main(String[] args) throws Exception {
-        String randomString = RandomUtils.getRandomString(16);
+        String randomString = RandomUtil.randomNumChar(16);
         String content = "hahhahaahhahni";
         System.out.println("加密前：" + content);
         System.out.println("加密密钥和解密密钥：" + randomString);
