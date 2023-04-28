@@ -2,7 +2,6 @@ package com.mudxx.common.utils.crypt;
 
 
 import cn.hutool.core.util.StrUtil;
-import com.mudxx.common.utils.RandomUtils;
 import org.springframework.util.StringUtils;
 
 import javax.crypto.Cipher;
@@ -15,7 +14,7 @@ import java.util.Base64;
 /**
  * @author laiwen
  */
-public class AESUtils {
+public class AESUtil {
     //算法
     private static final String ALGORITHMSTR = "AES/ECB/PKCS5Padding";
 

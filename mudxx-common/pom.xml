@@ -9,8 +9,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>com.mudxx.common</groupId>
     <artifactId>mudxx-common</artifactId>
     <packaging>pom</packaging>
+    <version>0.0.1-SNAPSHOT</version>
     <modules>
         <module>mudxx-common-constants</module>
         <module>mudxx-common-web</module>

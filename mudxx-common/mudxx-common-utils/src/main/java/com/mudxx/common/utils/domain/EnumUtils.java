@@ -1,4 +1,4 @@
-package com.mudxx.common.utils;
+package com.mudxx.common.utils.domain;
 
 import cn.hutool.core.lang.func.Func1;
 import cn.hutool.core.lang.func.LambdaUtil;

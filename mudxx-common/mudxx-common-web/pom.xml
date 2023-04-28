@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>mudxx-common</artifactId>
-        <groupId>com.mudxx</groupId>
+        <groupId>com.mudxx.common</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -19,17 +19,17 @@
     <dependencies>
         <!--系统模块工程-->
         <dependency>
-            <groupId>com.mudxx</groupId>
+            <groupId>com.mudxx.common</groupId>
             <artifactId>mudxx-common-constants</artifactId>
             <version>${mudxx.core.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.mudxx</groupId>
+            <groupId>com.mudxx.common</groupId>
             <artifactId>mudxx-common-utils</artifactId>
             <version>${mudxx.core.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.mudxx</groupId>
+            <groupId>com.mudxx.common</groupId>
             <artifactId>mudxx-common-exception</artifactId>
             <version>${mudxx.core.version}</version>
         </dependency>

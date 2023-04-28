@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * @author laiwen
  */
-public class RSAUtils {
+public class RSAUtil {
 
     /**
      * 定义加密方式
@@ -355,32 +355,9 @@ public class RSAUtils {
      * 测试方法
      */
     public static void main(String[] args) {
-        Map<String, Object> map = RSAUtils.init();
-        System.out.println("公钥：" + RSAUtils.getPublicKey(map));
-        System.out.println("私钥：" + RSAUtils.getPrivateKey(map));
-
-//        String publicKey = "";
-//        String privateKey = "";
-        /*
-        String str = "123456";
-        // 公钥加密，私钥解密
-        String enStr1 = RsaTool.encryptByPublicKey(str, publicKey);
-        System.out.println("公钥加密后：" + enStr1);
-        String deStr1 = RsaTool.decryptByPrivateKey(enStr1, privateKey);
-        System.out.println("私钥解密后：" + deStr1);
-        // 私钥加密，公钥解密
-        String enStr2 = RsaTool.encryptByPrivateKey(str, privateKey);
-        System.out.println("私钥加密后：" + enStr2);
-        String deStr2 = RsaTool.decryptByPublicKey(enStr2, publicKey);
-        System.out.println("公钥解密后：" + deStr2);
-        // 产生签名
-        String sign = sign(enStr2, privateKey);
-        System.out.println("签名:" + sign);
-        // 验证签名
-        boolean status = verify(enStr2, publicKey, sign);
-        System.out.println("状态:" + status);
-        */
-
+        Map<String, Object> map = RSAUtil.init();
+        System.out.println("公钥：" + RSAUtil.getPublicKey(map));
+        System.out.println("私钥：" + RSAUtil.getPrivateKey(map));
     }
 
 }

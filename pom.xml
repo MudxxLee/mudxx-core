@@ -21,6 +21,7 @@
         <hutool.version>5.8.11</hutool.version>
         <fastjson.version>1.2.83</fastjson.version>
         <commons.collections.version>3.2.1</commons.collections.version>
+        <commons.lang3.version>3.5</commons.lang3.version>
         <slfj4.version>1.7.30</slfj4.version>
 
         <maven.plugins.version>3.8.1</maven.plugins.version>
@@ -81,6 +82,13 @@
             <artifactId>commons-collections</artifactId>
             <version>${commons.collections.version}</version>
         </dependency>
+        <!--commons-lang3工具包-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons.lang3.version}</version>
+        </dependency>
+
         <!--slf4j-api工具包-->
         <dependency>
             <groupId>org.slf4j</groupId>

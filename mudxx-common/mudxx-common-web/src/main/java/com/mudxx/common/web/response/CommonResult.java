@@ -2,12 +2,15 @@ package com.mudxx.common.web.response;
 
 import cn.hutool.json.JSONConfig;
 import cn.hutool.json.JSONUtil;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mudxx.common.exception.code.CommonErrorCode;
 import com.mudxx.common.exception.code.IErrorCode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 通用返回对象
@@ -17,6 +20,12 @@ import java.io.Serializable;
 @ApiModel(description = "通用返回对象")
 public class CommonResult<T> implements Serializable {
     private static final long serialVersionUID = -7976826315846369771L;
+
+    /**
+     * @description 定义jackson对象
+     */
+    private static final ObjectMapper MAPPER = new ObjectMapper();
+
     @ApiModelProperty(value = "错误码")
     private String code;
     @ApiModelProperty(value = "提示信息")
@@ -62,17 +71,19 @@ public class CommonResult<T> implements Serializable {
 
     /**
      * 失败返回结果
-     * @param code 错误码
+     *
+     * @param code    错误码
      * @param message 提示信息
-     * @param data 数据
+     * @param data    数据
      */
     public static <T> CommonResult<T> failed(String code, String message, T data) {
-        return new CommonResult<T>(code, message, data);
+        return new CommonResult<>(code, message, data);
     }
 
     /**
      * 失败返回结果
-     * @param code 错误码
+     *
+     * @param code    错误码
      * @param message 提示信息
      */
     public static <T> CommonResult<T> failed(String code, String message) {
@@ -81,8 +92,9 @@ public class CommonResult<T> implements Serializable {
 
     /**
      * 失败返回结果
+     *
      * @param errorCode 错误码
-     * @param message 提示信息
+     * @param message   提示信息
      */
     public static <T> CommonResult<T> failed(IErrorCode errorCode, String message) {
         return failed(errorCode.getCode(), message);
@@ -90,14 +102,16 @@ public class CommonResult<T> implements Serializable {
 
     /**
      * 失败返回结果
+     *
      * @param errorCode 错误码
      */
     public static <T> CommonResult<T> failed(IErrorCode errorCode) {
-        return new CommonResult<T>(errorCode, null);
+        return new CommonResult<>(errorCode, null);
     }
 
     /**
      * 失败返回结果
+     *
      * @param message 提示信息
      */
     public static <T> CommonResult<T> failed(String message) {
@@ -113,6 +127,7 @@ public class CommonResult<T> implements Serializable {
 
     /**
      * 未登录返回结果
+     *
      * @param message 提示信息
      */
     public static <T> CommonResult<T> unauthorized(String message) {
@@ -128,6 +143,7 @@ public class CommonResult<T> implements Serializable {
 
     /**
      * 未授权返回结果
+     *
      * @param message 提示信息
      */
     public static <T> CommonResult<T> forbidden(String message) {
@@ -143,6 +159,7 @@ public class CommonResult<T> implements Serializable {
 
     /**
      * API找不到返回结果
+     *
      * @param message 提示信息
      */
     public static <T> CommonResult<T> notfound(String message) {
@@ -155,6 +172,80 @@ public class CommonResult<T> implements Serializable {
     public static <T> CommonResult<T> notfound() {
         return failed(CommonErrorCode.NOT_FOUND);
     }
+
+
+    /**
+     * 说明：data为null
+     *
+     * @param json json字符串
+     * @return 返回自定义响应对象
+     */
+    public static <T> CommonResult<T> format(String json) {
+        try {
+            // json字符串中data为null，将json字符串转换成CommonResult对象
+            return MAPPER.readValue(json, CommonResult.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 说明：data为T类型的单个对象
+     *
+     * @param json  json字符串
+     * @param clazz T类型
+     * @return 返回自定义响应对象
+     */
+    public static <T> CommonResult<T> formatToPojo(String json, Class<T> clazz) {
+        try {
+            if (clazz == null) {
+                return MAPPER.readValue(json, CommonResult.class);
+            }
+            JsonNode jsonNode = MAPPER.readTree(json);
+            // 获取data的值
+            JsonNode data = jsonNode.get("data");
+            // obj用来存储data
+            T obj = null;
+            if (!data.isNull()) {
+                // 如果data不为null
+                obj = MAPPER.readValue(data.traverse(), clazz);
+            }
+            return new CommonResult<>(jsonNode.get("code").asText(), jsonNode.get("msg").asText(), obj);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 说明：data为T类型对象的集合
+     *
+     * @param json  json字符串
+     * @param clazz T类型
+     * @return 返回自定义响应对象
+     */
+    public static <T> CommonResult<T> formatToList(String json, Class<T> clazz) {
+        try {
+            if (clazz == null) {
+                return MAPPER.readValue(json, CommonResult.class);
+            }
+            JsonNode jsonNode = MAPPER.readTree(json);
+            // 获取data的值
+            JsonNode data = jsonNode.get("data");
+            // obj用来存储data
+            T obj = null;
+            if (data.isArray() && data.size() > 0) {
+                // 如果data是数组格式并且长度不为0
+                obj = MAPPER.readValue(data.traverse(), MAPPER.getTypeFactory().constructCollectionType(List.class, clazz));
+            }
+            return new CommonResult<>(jsonNode.get("code").asText(), jsonNode.get("msg").asText(), obj);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     public String getCode() {
         return code;
