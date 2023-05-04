@@ -34,7 +34,7 @@ public class ResourceUtil {
     public String getValue(String key) {
     	String value = null;
     	try {
-    		value = new String(BUNDLE.getString(key).getBytes("ISO-8859-1"), "UTF8");
+    		value = new String(BUNDLE.getString(key).getBytes("ISO-8859-1"), "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			log.info("【不支持编码异常，请确保您设置的字符编码没有问题！】");
 		} catch (NullPointerException e) {
