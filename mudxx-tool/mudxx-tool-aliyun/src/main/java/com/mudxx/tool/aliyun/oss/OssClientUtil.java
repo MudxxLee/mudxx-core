@@ -7,7 +7,7 @@ import com.aliyun.oss.model.ObjectListing;
 import com.mudxx.common.utils.date.CalendarUtil;
 import com.mudxx.common.utils.empty.EmptyUtil;
 import com.mudxx.common.utils.exception.ExceptionUtil;
-import com.mudxx.common.utils.code.NumberGenerator;
+import com.mudxx.common.utils.id.NumberGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;

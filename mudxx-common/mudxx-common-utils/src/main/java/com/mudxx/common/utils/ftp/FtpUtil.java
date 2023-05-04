@@ -1,7 +1,7 @@
 package com.mudxx.common.utils.ftp;
 
 import com.mudxx.common.utils.date.CalendarUtil;
-import com.mudxx.common.utils.code.NumberGenerator;
+import com.mudxx.common.utils.id.NumberGenerator;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;

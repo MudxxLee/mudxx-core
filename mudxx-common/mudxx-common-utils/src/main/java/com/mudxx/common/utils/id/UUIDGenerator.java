@@ -1,12 +1,14 @@
-package com.mudxx.common.utils.code;
+package com.mudxx.common.utils.id;
 
 import java.util.UUID;
 
 /**
+ * UUID id
+ *
  * @author laiw
  * @date 2023/4/28 13:47
  */
-public class IdGenerator {
+public class UUIDGenerator {
 
     /**
      * 生成UUID(去除-)

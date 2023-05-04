@@ -1,4 +1,4 @@
-package com.mudxx.common.utils.code;
+package com.mudxx.common.utils.id;
 
 import com.mudxx.common.utils.date.CalendarUtil;
 
