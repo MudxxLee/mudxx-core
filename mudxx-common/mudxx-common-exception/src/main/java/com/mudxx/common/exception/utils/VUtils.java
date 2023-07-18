@@ -2,6 +2,8 @@ package com.mudxx.common.exception.utils;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import com.mudxx.common.exception.code.IErrorCode;
+import com.mudxx.common.exception.code.biz.BizErrorCode;
 import com.mudxx.common.exception.code.biz.BizException;
 import com.mudxx.common.exception.function.ThrowExceptionFunction;
 
@@ -16,9 +18,18 @@ public class VUtils {
      * @param bool boolean
      */
     public static ThrowExceptionFunction isTrue(boolean bool) {
-        return (errorCode, args) -> {
-            if (bool) {
-                throw new BizException(errorCode, args);
+        return new ThrowExceptionFunction() {
+            @Override
+            public void throwMessage(IErrorCode errorCode, Object... args) {
+                if (bool) {
+                    throw new BizException(errorCode, args);
+                }
+            }
+            @Override
+            public void throwMessage(IErrorCode errorCode, String message, Object... args) {
+                if (bool) {
+                    throw new BizException(errorCode.getCode(), message, args);
+                }
             }
         };
     }
@@ -37,6 +48,15 @@ public class VUtils {
      */
     public static ThrowExceptionFunction isEmpty(Object object) {
         return isTrue(ObjectUtil.isEmpty(object));
+    }
+
+    public static void main(String[] args) {
+        VUtils.isTrue(true).throwMessage(BizErrorCode.BIZ_ERROR);
+        VUtils.isTrue(true).throwMessage(BizErrorCode.BIZ_ERROR, "测完");
+        VUtils.isEmpty(true).throwMessage(BizErrorCode.BIZ_ERROR);
+        VUtils.isEmpty(null).throwMessage(BizErrorCode.BIZ_ERROR, "测完");
+        VUtils.isBlank("true").throwMessage(BizErrorCode.BIZ_ERROR);
+        VUtils.isBlank("").throwMessage(BizErrorCode.BIZ_ERROR, "测完");
     }
 
 }

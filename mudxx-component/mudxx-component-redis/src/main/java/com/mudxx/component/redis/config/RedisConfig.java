@@ -1,8 +1,10 @@
-package com.mudxx.component.redis;
+package com.mudxx.component.redis.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
@@ -11,13 +13,15 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 /**
  * redis配置类（自定义）
  */
-public class RedisConfigBuilder {
+@Configuration
+public class RedisConfig {
 
     /**
      * description: 自定义redis缓存配置
      * @param factory redis连接工厂
      * @return 返回redis模板对象
      */
+    @Bean
     public RedisTemplate<String, Object> buildRedisTemplate(RedisConnectionFactory factory) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(factory);

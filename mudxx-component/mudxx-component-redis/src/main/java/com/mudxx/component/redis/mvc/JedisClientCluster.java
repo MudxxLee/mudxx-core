@@ -1,18 +1,21 @@
 package com.mudxx.component.redis.mvc;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import redis.clients.jedis.JedisCluster;
 
 import java.util.List;
 
 /**
  * jedis客户端集群版实现类
+ *
  * @author laiwen
  */
 public class JedisClientCluster implements JedisClient {
 
-    @Autowired
-    private JedisCluster jedisCluster;
+    private final JedisCluster jedisCluster;
+
+    public JedisClientCluster(JedisCluster jedisCluster) {
+        this.jedisCluster = jedisCluster;
+    }
 
     @Override
     public String get(String key) {

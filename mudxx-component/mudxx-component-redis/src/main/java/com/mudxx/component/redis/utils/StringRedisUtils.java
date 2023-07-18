@@ -1,13 +1,11 @@
-package com.mudxx.component.redis;
+package com.mudxx.component.redis.utils;
 
 import cn.hutool.core.util.ObjectUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.RedisStringCommands;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.SetOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.types.Expiration;
-import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Set;
@@ -19,11 +17,13 @@ import java.util.concurrent.TimeUnit;
  * @author laiw
  * @date 2023/3/31 10:32
  */
-@Component
 public class StringRedisUtils {
 
-    @Autowired
-    private StringRedisTemplate stringRedisTemplate;
+    private final StringRedisTemplate stringRedisTemplate;
+
+    public StringRedisUtils(StringRedisTemplate stringRedisTemplate) {
+        this.stringRedisTemplate = stringRedisTemplate;
+    }
 
     /**
      * 缓存基本的对象，Integer、String、实体类等

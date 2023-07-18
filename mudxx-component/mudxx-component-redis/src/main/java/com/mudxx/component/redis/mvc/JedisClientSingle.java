@@ -1,6 +1,5 @@
 package com.mudxx.component.redis.mvc;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
@@ -13,8 +12,11 @@ import java.util.List;
  */
 public class JedisClientSingle implements JedisClient {
 
-    @Autowired
-    private JedisPool jedisPool;
+    private final JedisPool jedisPool;
+
+    public JedisClientSingle(JedisPool jedisPool) {
+        this.jedisPool = jedisPool;
+    }
 
     @Override
     public String get(String key) {

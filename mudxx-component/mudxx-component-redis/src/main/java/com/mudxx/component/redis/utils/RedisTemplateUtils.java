@@ -1,13 +1,11 @@
-package com.mudxx.component.redis;
+package com.mudxx.component.redis.utils;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -16,16 +14,18 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * description: Redis模板工具类
+ *
  * @author laiwen
  */
-@Component
 public final class RedisTemplateUtils {
 
     private static final Logger log = LoggerFactory.getLogger(RedisTemplateUtils.class);
 
-    @Resource
-    private RedisTemplate<String, Object> redisTemplate;
+    private final RedisTemplate<String, Object> redisTemplate;
 
+    public RedisTemplateUtils(RedisTemplate<String, Object> redisTemplate) {
+        this.redisTemplate = redisTemplate;
+    }
     // =============================common============================
 
     /**
