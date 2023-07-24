@@ -1,16 +1,21 @@
 package com.mudxx.component.redis.lock.jedis;
 
-import com.mudxx.component.redis.lock.script.RedisLockScript;
+import com.mudxx.component.redis.lock.script.RedisLuaConstants;
 import redis.clients.jedis.Jedis;
 
 import java.util.Collections;
 
 /**
  * Redis分布式锁(不可重入)
+ * <p>
  * 确保锁的实现同时满足以下四个条件：
+ * <p>
  * 1、互斥性：在任意时刻，只有一个客户端能持有锁；
+ * <p>
  * 2、不会发生死锁：即使有一个客户端在持有锁的期间崩溃而没有主动解锁，也能保证后续其他客户端能加锁；
+ * <p>
  * 3、具有容错性：只要大部分的Redis节点正常运行，客户端就可以加锁和解锁；
+ * <p>
  * 4、解铃还须系铃人：加锁和解锁必须是同一个客户端，客户端自己不能把别人加的锁给解了。
  *
  * @author lw
@@ -36,7 +41,9 @@ public class JedisLock {
 
     /**
      * 尝试获取分布式锁
+     * <p>
      * 1. 当前没有锁（key不存在），那么就进行加锁操作，并对锁设置个有效期，同时value表示加锁的内容。
+     * <p>
      * 2. 已有锁存在，不做任何操作
      *
      * @param jedis        Redis客户端
@@ -45,7 +52,7 @@ public class JedisLock {
      * @param expireSecond 超期时间(秒)
      * @return 是否获取成功
      */
-    public static boolean tryLock(Jedis jedis, String lockKey, String lockValue, int expireSecond) {
+    public static boolean tryLock(Jedis jedis, final String lockKey, final String lockValue, int expireSecond) {
         /*
          * 第一个为key：使用key来当锁，因为key是唯一的；
          * 第二个为value：为何需要设置value？原因就是分布式锁要满足第四个条件解铃还须系铃人，通过给value赋值，在解锁的时候就可以有依据；
@@ -60,7 +67,9 @@ public class JedisLock {
 
     /**
      * 释放分布式锁
+     * <p>
      * 1、用Lua语言确保操作是原子性的
+     * <p>
      * 2、获取锁对应的value值，检查是否相等，如果相等则删除锁（解锁）
      *
      * @param jedis     Redis客户端
@@ -68,8 +77,8 @@ public class JedisLock {
      * @param lockValue 锁的内容
      * @return 是否释放成功
      */
-    public static boolean unLock(Jedis jedis, String lockKey, String lockValue) {
-        Object result = jedis.eval(RedisLockScript.UNLOCK_SCRIPT, Collections.singletonList(lockKey), Collections.singletonList(lockValue));
+    public static boolean unLock(Jedis jedis, final String lockKey, final String lockValue) {
+        Object result = jedis.eval(RedisLuaConstants.UNLOCK_SCRIPT, Collections.singletonList(lockKey), Collections.singletonList(lockValue));
         return UNLOCK_SUCCESS.equals(result);
     }
 }

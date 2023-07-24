@@ -1,6 +1,6 @@
 package com.mudxx.component.redis.lock.single;
 
-import com.mudxx.component.redis.lock.script.RedisLockScript;
+import com.mudxx.component.redis.lock.script.RedisLuaConstants;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStringCommands;
@@ -102,7 +102,7 @@ public class RedisLock {
         }
         RedisConnection conn = factory.getConnection();
         try {
-            Long result = conn.scriptingCommands().eval(RedisLockScript.UNLOCK_SCRIPT.getBytes(StandardCharsets.UTF_8), ReturnType.INTEGER, 1, keysAndArgs);
+            Long result = conn.scriptingCommands().eval(RedisLuaConstants.UNLOCK_SCRIPT.getBytes(StandardCharsets.UTF_8), ReturnType.INTEGER, 1, keysAndArgs);
             if (result != null && result > 0) {
                 return true;
             }

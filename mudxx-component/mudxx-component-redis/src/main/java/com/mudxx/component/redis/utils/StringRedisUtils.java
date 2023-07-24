@@ -110,7 +110,30 @@ public class StringRedisUtils {
     }
 
     /**
+     * 缓存自增+1
+     * 如果key不存在会创建一个，默认value为0
+     *
+     * @param key 需自增的key
+     * @return 自增后的值
+     */
+    public Long increment(final String key) {
+        return stringRedisTemplate.opsForValue().increment(key);
+    }
+
+    /**
+     * 缓存自减-1
+     * 如果key不存在会创建一个，默认value为0
+     *
+     * @param key 需自增的key
+     * @return 自减后的值
+     */
+    public Long decrement(final String key) {
+        return stringRedisTemplate.opsForValue().decrement(key);
+    }
+
+    /**
      * 缓存自增
+     * 如果key不存在会创建一个，默认value为0
      *
      * @param key   需自增的key
      * @param value 自增值
@@ -118,6 +141,18 @@ public class StringRedisUtils {
      */
     public Long increment(final String key, final long value) {
         return stringRedisTemplate.opsForValue().increment(key, value);
+    }
+
+    /**
+     * 缓存自减
+     * 如果key不存在会创建一个，默认value为0
+     *
+     * @param key   需自增的key
+     * @param value 自减值
+     * @return 自减后的值
+     */
+    public Long decrement(final String key, final long value) {
+        return stringRedisTemplate.opsForValue().decrement(key, value);
     }
 
     /**

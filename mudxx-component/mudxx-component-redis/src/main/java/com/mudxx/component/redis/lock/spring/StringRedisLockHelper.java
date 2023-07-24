@@ -1,23 +1,29 @@
 package com.mudxx.component.redis.lock.spring;
 
-import com.mudxx.component.redis.lock.script.RedisLockScript;
+import com.mudxx.component.redis.lock.script.RedisLuaScript;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.data.redis.core.script.DefaultRedisScript;
-import org.springframework.data.redis.core.script.RedisScript;
 
 import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * Redis分布式锁(不可重入)
+ * <p>
+ * 确保锁的实现同时满足以下四个条件：
+ * <p>
+ * 1、互斥性：在任意时刻，只有一个客户端能持有锁；
+ * <p>
+ * 2、不会发生死锁：即使有一个客户端在持有锁的期间崩溃而没有主动解锁，也能保证后续其他客户端能加锁；
+ * <p>
+ * 3、具有容错性：只要大部分的Redis节点正常运行，客户端就可以加锁和解锁；
+ * <p>
+ * 4、解铃还须系铃人：加锁和解锁必须是同一个客户端，客户端自己不能把别人加的锁给解了。
+ *
  * @author laiw
  * @date 2023/7/14 15:51
  */
 public class StringRedisLockHelper {
-    /**
-     * 释放锁脚本
-     */
-    private static final RedisScript<Boolean> UNLOCK_REDIS_SCRIPT = new DefaultRedisScript<>(RedisLockScript.UNLOCK_SCRIPT, Boolean.class);
     /**
      * redis模板
      */
@@ -27,23 +33,21 @@ public class StringRedisLockHelper {
         this.stringRedisTemplate = stringRedisTemplate;
     }
 
-    public static void main(String[] args) {
-        System.out.println(TimeUnit.SECONDS.toMillis(6L));
-    }
-
     /**
-     * 轮询尝试获取分布式锁(阻塞线程)
+     * 轮询尝试获取分布式锁（阻塞线程，不公平竞争）
+     * <p>
      * 1. 当前没有锁（key不存在），那么就进行加锁操作，并对锁设置个有效期，同时value表示加锁的客户端。
+     * <p>
      * 2. 已有锁存在，不做任何操作
      *
      * @param lockKey             锁
      * @param lockValue           锁的内容
      * @param expireSecond        锁过期时长(秒)
-     * @param maxWaitTime         最大等待时间(秒)
-     * @param retryIntervalMillis 重试间隔时间(毫秒)
+     * @param maxWaitTime         最大等待时间(秒，如评估业务耗时5s，则设定为6s)
+     * @param retryIntervalMillis 重试间隔时间(毫秒，推荐：[50~500] 轮询次数[内存8G、CPU4核]： 50_34~36 100_30~33 200_20~22 500_10~12)
      * @return 是否获取成功
      */
-    public boolean tryLock(String lockKey, String lockValue, long expireSecond, long maxWaitTime, long retryIntervalMillis) {
+    public boolean retryLock(final String lockKey, final String lockValue, long expireSecond, long maxWaitTime, long retryIntervalMillis) {
         if (maxWaitTime <= 0) {
             throw new IllegalArgumentException("maxWaitTime must be greater than zero");
         }
@@ -72,7 +76,9 @@ public class StringRedisLockHelper {
 
     /**
      * 尝试获取分布式锁
+     * <p>
      * 1. 当前没有锁（key不存在），那么就进行加锁操作，并对锁设置个有效期，同时value表示加锁的内容。
+     * <p>
      * 2. 已有锁存在，不做任何操作
      *
      * @param lockKey      锁
@@ -80,7 +86,7 @@ public class StringRedisLockHelper {
      * @param expireSecond 锁过期时长(秒)
      * @return 是否获取成功
      */
-    public boolean tryLock(String lockKey, String lockValue, long expireSecond) {
+    public boolean tryLock(final String lockKey, final String lockValue, long expireSecond) {
         ValueOperations<String, String> opsForValue = stringRedisTemplate.opsForValue();
         Boolean absent = opsForValue.setIfAbsent(lockKey, lockValue, expireSecond, TimeUnit.SECONDS);
         return Boolean.TRUE.equals(absent);
@@ -88,16 +94,35 @@ public class StringRedisLockHelper {
 
     /**
      * 释放分布式锁
+     * <p>
      * 1、用Lua语言确保操作是原子性的
+     * <p>
      * 2、获取锁对应的value值，检查是否相等，如果相等则删除锁（解锁）
      *
      * @param lockKey   锁
      * @param lockValue 锁的内容
      * @return 是否释放成功
      */
-    public boolean unLock(String lockKey, String lockValue) {
-        Boolean execute = stringRedisTemplate.execute(UNLOCK_REDIS_SCRIPT, Collections.singletonList(lockKey), lockValue);
+    public boolean tryUnLock(final String lockKey, final String lockValue) {
+        Boolean execute = stringRedisTemplate.execute(
+                RedisLuaScript.UNLOCK_REDIS_SCRIPT,
+                Collections.singletonList(lockKey),
+                lockValue);
         return Boolean.TRUE.equals(execute);
+    }
+
+    /**
+     * 释放分布式锁
+     * <p>
+     * 1、用Lua语言确保操作是原子性的
+     * <p>
+     * 2、获取锁对应的value值，检查是否相等，如果相等则删除锁（解锁）
+     *
+     * @param lockKey   锁
+     * @param lockValue 锁的内容
+     */
+    public void unLock(final String lockKey, final String lockValue) {
+        this.tryUnLock(lockKey, lockValue);
     }
 
 }

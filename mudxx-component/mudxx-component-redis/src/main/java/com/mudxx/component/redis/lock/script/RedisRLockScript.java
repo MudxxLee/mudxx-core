@@ -5,14 +5,12 @@ package com.mudxx.component.redis.lock.script;
  * redis脚本命令
  * redis.call('hget', lockKey, lockValue)
  *
- *
- *
  * @author laiw
  * @date 2023/7/14 11:03
  */
 public class RedisRLockScript {
 
-    public static final String LOCK_SCRIPT = "" +
+    public static final String LOCK_SCRIPT =
             "local lockKey=KEYS[1]\n" +
             "local lockValue=ARGV[1]\n" +
             "local expireSecond=ARGV[2]\n" +
@@ -30,7 +28,7 @@ public class RedisRLockScript {
             "end\n" +
             "return 0\n";
 
-    public static final String UNLOCK_SCRIPT = "" +
+    public static final String UNLOCK_SCRIPT =
             "local lockKey=KEYS[1]\n" +
             "local lockValue=ARGV[1]\n" +
             "local value=redis.call('hget',lockKey,lockValue)\n" +

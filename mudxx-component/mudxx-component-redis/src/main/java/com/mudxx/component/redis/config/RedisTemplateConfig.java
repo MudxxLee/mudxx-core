@@ -14,7 +14,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * redis配置类（自定义）
  */
 @Configuration
-public class RedisConfig {
+public class RedisTemplateConfig {
 
     /**
      * description: 自定义redis缓存配置
