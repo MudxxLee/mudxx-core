@@ -1,0 +1,7 @@
+server:
+  port: 9410
+spring:
+  application:
+    name: mudxx-tool-oci
+  profiles:
+    include: oci

@@ -1,0 +1,8 @@
+oci:
+  objectstorage:
+    namespace: cn8hmkndgud5
+    userId: ocid1.user.oc1..aaaaaaaavarjdgcsw43hvdnna35vcrwjm3pqeu6jyv22z7pkuoywnspwwdsa
+    fingerprint: 48:17:65:e7:74:35:6f:76:7a:fb:71:ee:a0:94:0c:ba
+    tenancy: ocid1.tenancy.oc1..aaaaaaaambezyu2ogbzgxcgy2ni3e6ik7uzr4irlrrm7clbuargwmfsk2woa
+    region: ap-seoul-1
+    keyFile: /Users/laiwen/Documents/laiw@agilewing.net_2023-08-18T02_24_06.871Z.pem
