@@ -17,6 +17,7 @@
         <module>mudxx-tool-japidocs</module>
         <module>mudxx-tool-aliyun</module>
         <module>mudxx-tool-wx</module>
+        <module>mudxx-tool-oci</module>
     </modules>
 
     <properties>

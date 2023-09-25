@@ -36,6 +36,7 @@ public class RedisLuaScript {
      * 自减脚本
      */
     public static final RedisScript<Boolean> DECR_REDIS_SCRIPT = new DefaultRedisScript<>(RedisLuaConstants.DECR_SCRIPT, Boolean.class);
+
     /**
      * 自增脚本(过期设置)
      */

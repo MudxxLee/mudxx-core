@@ -63,8 +63,7 @@ public class RedisLuaConstants {
      */
     public static final String DECR_SCRIPT = "" +
             "local key = KEYS[1]\n" +
-            "local exists = redis.call('exists', key)\n" +
-            "if exists == 0 then\n" +
+            "if redis.call('exists', key) == 0 then\n" +
             "    return 0\n" +
             "end\n" +
             "local current = redis.call('decr', key)\n" +
@@ -103,25 +102,23 @@ public class RedisLuaConstants {
      * <p>
      * 2、将 key 中储存的数字值减 1
      * <p>
-     * 3、若 key 的未设置过期时间，则进行设置
+     * 3、若减后的值 <= 0，则删除该key
      * <p>
-     * 4、若减后的值 <= 0，则删除该key
+     * 4、重新设置过期时间
      * <p>
      * 如果值包含错误的类型，或字符串类型的值不能表示为数字，那么返回一个错误。
      */
     public static final String DECR_EXP_SCRIPT = "" +
             "local key = KEYS[1]\n" +
-            "local expireSecond = ARGV[1]\n" +
-            "local exists = redis.call('exists', key)\n" +
-            "if exists == 0 then\n" +
+            "if redis.call('exists', key) == 0 then\n" +
             "    return 0\n" +
             "end\n" +
+            "local expireSecond = ARGV[1]\n" +
             "local current = redis.call('decr', key)\n" +
-            "if redis.call('ttl', key) == -1 then\n" +
-            "    redis.call('expire', key, expireSecond)\n" +
-            "end\n" +
+            "redis.call('expire', key, expireSecond)\n" +
             "if current and tonumber(current) <= 0 then\n" +
             "    redis.call('del', key)\n" +
             "end\n" +
             "return 1\n";
+
 }
