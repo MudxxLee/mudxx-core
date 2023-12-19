@@ -51,17 +51,6 @@ public class BizException extends RuntimeException {
      * 使用自定义消息
      *
      * @param errorCode 异常枚举
-     * @param message   详情
-     */
-    public BizException(IErrorCode errorCode, String message) {
-        super(message);
-        this.code = errorCode.getCode();
-    }
-
-    /**
-     * 使用自定义消息
-     *
-     * @param errorCode 异常枚举
      * @param args      args
      */
     public BizException(IErrorCode errorCode, Object... args) {

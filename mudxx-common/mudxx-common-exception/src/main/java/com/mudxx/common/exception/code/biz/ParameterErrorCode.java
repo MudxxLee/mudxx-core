@@ -15,9 +15,9 @@ public enum ParameterErrorCode implements IErrorCode {
     /**
      * 子级定义
      */
-    NULL_ERROR("5000101", "%s 不能为空"),
-    INVALID_ERROR("5000102", "%s 值无效"),
-    NOT_IN_RANGE("5000103", "%s 不在取值范围内 [%s]"),
+    NULL_ERROR("5000101", "%s不能为空"),
+    INVALID_VALUE("5000102", "%s值无效"),
+    NOT_IN_RANGE("5000103", "%s不在取值范围内：[%s]"),
 
 
 

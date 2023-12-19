@@ -649,4 +649,9 @@ public final class RedisTemplateUtils {
         return 0L;
     }
 
+
+    public void addToZSet(String key, Object value, double score) {
+        redisTemplate.opsForZSet().add(key, value, score);
+    }
+
 }

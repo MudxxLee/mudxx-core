@@ -17,18 +17,19 @@ public class WebUtils {
         //设置响应数据编码和响应数据类型
         response.setCharacterEncoding("utf-8");
         response.setContentType("application/json;charset=utf-8");
-        PrintWriter out= response.getWriter();
+        PrintWriter out = response.getWriter();
         out.write(result.toString());
         out.flush();
     }
 
     /**
      * 获取请求的归属IP地址
+     *
      * @param request
      * @return
      */
     public static String getIpAddress(HttpServletRequest request) {
-        String ipAddress = null;
+        String ipAddress;
         try {
             ipAddress = request.getHeader("x-forwarded-for");
             if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {

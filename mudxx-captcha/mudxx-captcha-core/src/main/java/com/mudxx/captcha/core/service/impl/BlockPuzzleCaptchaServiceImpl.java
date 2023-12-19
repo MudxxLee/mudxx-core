@@ -101,13 +101,13 @@ public class BlockPuzzleCaptchaServiceImpl extends AbstractCaptchaService {
         } catch (Exception e) {
             logger.error("验证码坐标解析失败", e);
             afterValidateFail(checkDTO.getBrowserInfo());
-            throw new BizException(CaptchaErrorCode.CAPTCHA_CHECK_ERROR, e.getMessage());
+            throw new BizException(CaptchaErrorCode.CAPTCHA_FAILED, e.getMessage());
         }
         if (point.x - Integer.parseInt(slipOffset) > point1.x
                 || point1.x > point.x + Integer.parseInt(slipOffset)
                 || point.y != point1.y) {
             afterValidateFail(checkDTO.getBrowserInfo());
-            throw new BizException(CaptchaErrorCode.CAPTCHA_CHECK_ERROR);
+            throw new BizException(CaptchaErrorCode.CAPTCHA_FAILED);
         }
         //校验成功，将信息存入缓存
         String secretKey = point.getSecretKey();
@@ -117,7 +117,7 @@ public class BlockPuzzleCaptchaServiceImpl extends AbstractCaptchaService {
         } catch (Exception e) {
             logger.error("AES加密失败", e);
             afterValidateFail(checkDTO.getBrowserInfo());
-            throw new BizException(CaptchaErrorCode.CAPTCHA_CHECK_ERROR, e.getMessage());
+            throw new BizException(CaptchaErrorCode.CAPTCHA_FAILED, e.getMessage());
         }
         String secondKey = String.format(REDIS_SECOND_CAPTCHA_KEY, value);
         CaptchaServiceFactory.getCache(cacheType).set(secondKey, checkDTO.getToken(), EXPIRES_THREE);
@@ -138,7 +138,7 @@ public class BlockPuzzleCaptchaServiceImpl extends AbstractCaptchaService {
             CaptchaServiceFactory.getCache(cacheType).delete(codeKey);
         } catch (Exception e) {
             logger.error("验证码坐标解析失败", e);
-            throw new BizException(CaptchaErrorCode.CAPTCHA_CHECK_ERROR, e.getMessage());
+            throw new BizException(CaptchaErrorCode.CAPTCHA_FAILED, e.getMessage());
         }
     }
 

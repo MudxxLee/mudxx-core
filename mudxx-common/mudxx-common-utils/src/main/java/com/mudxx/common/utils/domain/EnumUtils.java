@@ -5,7 +5,7 @@ import cn.hutool.core.lang.func.LambdaUtil;
 import cn.hutool.core.util.EnumUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.ReflectUtil;
-import com.mudxx.common.constants.enumext.TerminalEnum;
+import com.mudxx.common.constants.enums.TerminalEnum;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -22,6 +22,6 @@ public interface ThrowExceptionFunction {
      * @param message 异常信息
      * @param args 扩展信息
      */
-    void throwMessage(IErrorCode errorCode, String message, Object... args);
+    void throwExtMessage(IErrorCode errorCode, String message, Object... args);
 
 }

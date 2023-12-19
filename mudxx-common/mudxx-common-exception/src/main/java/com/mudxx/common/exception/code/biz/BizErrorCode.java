@@ -3,18 +3,20 @@ package com.mudxx.common.exception.code.biz;
 import com.mudxx.common.exception.code.IErrorCode;
 
 /**
- * 封装API的错误码
+ * 错误码
  *
  * @author laiwen
  * @date 2019/4/19
  */
 public enum BizErrorCode implements IErrorCode {
     /**
+     * 业务错误码
      */
-    BIZ_ERROR("500", "业务错误"),
-    NOT_EXIST("501", "%s 不存在"),
-    EXISTS("502", "%s 已存在"),
-
+    BIZ_ERROR("500", "%s"),
+    NOT_EXIST("501", "%s不存在"),
+    EXISTS("502", "%s已存在"),
+    DISABLED("503", "%s已禁用"),
+    UNSUPPORTED("504", "不支持的：%s"),
 
     ;
 

@@ -29,12 +29,13 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
+        <!--OCI object storage-->
         <dependency>
             <groupId>com.oracle.oci.sdk</groupId>
             <artifactId>oci-java-sdk-objectstorage</artifactId>
             <version>${oci.java.sdk.version}</version>
         </dependency>
-
+        <!--OCI support cims-->
         <dependency>
             <groupId>com.oracle.oci.sdk</groupId>
             <artifactId>oci-java-sdk-cims</artifactId>
@@ -54,99 +55,10 @@
         </dependency>
 
 
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
        </dependency>
-
-        <!--        <dependency>-->
-<!--            <groupId>com.oracle.oci.sdk</groupId>-->
-<!--            <artifactId>oci-java-sdk-full</artifactId>-->
-<!--            <version>3.23.1</version>-->
-<!--            <scope>system</scope>-->
-<!--            <systemPath>${project.basedir}/libs/oci-java-sdk-full-3.23.1.jar</systemPath>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>com.oracle.oci.sdk</groupId>-->
-<!--            <artifactId>oci-java-sdk-common-httpclient-jersey</artifactId>-->
-<!--            <version>3.23.1</version>-->
-<!--            <scope>system</scope>-->
-<!--            <systemPath>${project.basedir}/libs/oci-java-sdk-common-httpclient-jersey-3.23.1.jar</systemPath>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>jakarta.activation</groupId>-->
-<!--            <artifactId>jakarta.activation-api</artifactId>-->
-<!--            <version>1.2.1</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.glassfish.hk2.external</groupId>-->
-<!--            <artifactId>jakarta.inject</artifactId>-->
-<!--            <version>2.6.1</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>jakarta.ws.rs</groupId>-->
-<!--            <artifactId>jakarta.ws.rs-api</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>jakarta.xml.bind</groupId>-->
-<!--            <artifactId>jakarta.xml.bind-api</artifactId>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>org.bouncycastle</groupId>-->
-<!--            <artifactId>bcprov-jdk15to18</artifactId>-->
-<!--            <version>1.74</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.bouncycastle</groupId>-->
-<!--            <artifactId>bcutil-jdk15to18</artifactId>-->
-<!--            <version>1.74</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.bouncycastle</groupId>-->
-<!--            <artifactId>bcpkix-jdk15to18</artifactId>-->
-<!--            <version>1.74</version>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>org.glassfish.jersey.core</groupId>-->
-<!--            <artifactId>jersey-client</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.glassfish.jersey.core</groupId>-->
-<!--            <artifactId>jersey-common</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.glassfish.jersey.ext</groupId>-->
-<!--            <artifactId>jersey-entity-filtering</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.glassfish.jersey.inject</groupId>-->
-<!--            <artifactId>jersey-hk2</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.glassfish.jersey.media</groupId>-->
-<!--            <artifactId>jersey-media-json-jackson</artifactId>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>io.github.resilience4j</groupId>-->
-<!--            <artifactId>resilience4j-core</artifactId>-->
-<!--            <version>1.7.1</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>io.github.resilience4j</groupId>-->
-<!--            <artifactId>resilience4j-circuitbreaker</artifactId>-->
-<!--            <version>1.7.1</version>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>org.slf4j</groupId>-->
-<!--            <artifactId>slf4j-api</artifactId>-->
-<!--        </dependency>-->
 
     </dependencies>
 

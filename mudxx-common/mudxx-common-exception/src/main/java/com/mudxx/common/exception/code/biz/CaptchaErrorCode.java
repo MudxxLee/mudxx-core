@@ -16,7 +16,7 @@ public enum CaptchaErrorCode implements IErrorCode {
      * 子级定义
      */
     CAPTCHA_INVALID("5000601", "验证码已失效，请重新获取"),
-    CAPTCHA_CHECK_ERROR("5000602", "验证失败"),
+    CAPTCHA_FAILED("5000602", "验证失败"),
     CAPTCHA_BASEMAP_NULL("5000603", "底图未初始化成功，请检查路径"),
     CAPTCHA_GET_ERROR("5000604", "获取验证码失败,请联系管理员"),
 

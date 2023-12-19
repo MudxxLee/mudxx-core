@@ -1,5 +1,9 @@
 package com.mudxx.common.utils.date;
 
+import cn.hutool.core.date.DateUtil;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,8 +12,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @description Java Calendar 类时间操作：获取时间，时间加减，以及比较时间大小等等。
@@ -799,4 +805,49 @@ public class CalendarUtil {
 		return stringToLocalTime(localTimeStr, "HH:mm:ss");
 	}
 
+	public static Date addMinute(Date date, int i) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.add(12, i);
+		return calendar.getTime();
+	}
+
+	public static int getMinute(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeInMillis(date.getTime());
+		return calendar.get(Calendar.MINUTE);
+	}
+
+	public static boolean isFiveMinute(Date date) {
+		try {
+			return getMinute(date) % 5 == 0;
+		} catch (Exception ignored) {
+		}
+		return false;
+	}
+
+	private static JSONObject fillInOtherTimePoints(Date date, int addMinute, JSONObject item) {
+		Date datetime = addMinute(date, addMinute);
+		JSONObject object = JSON.parseObject(JSON.toJSONString(item, SerializerFeature.WriteMapNullValue), JSONObject.class);
+		object.put("datetime", datetime.getTime()/1000);
+		return object;
+	}
+
+	public static void main(String[] args) {
+		Date date = CalendarUtil.stringToDate("2023-12-11 00:15:00");
+		JSONObject item = new JSONObject();
+		item.put("domain" , "domain");
+		item.put("datetime", date.getTime()/1000);
+		item.put("statType", 1233);
+		List<JSONObject> list = new ArrayList<>();
+		list.add(item);
+		if(isFiveMinute(date)) {
+			list.add(fillInOtherTimePoints(date, 1, item));
+			list.add(fillInOtherTimePoints(date, 2, item));
+			list.add(fillInOtherTimePoints(date, 3, item));
+			list.add(fillInOtherTimePoints(date, 4, item));
+		}
+		System.out.println(JSON.toJSONString(list));
+
+	}
 }

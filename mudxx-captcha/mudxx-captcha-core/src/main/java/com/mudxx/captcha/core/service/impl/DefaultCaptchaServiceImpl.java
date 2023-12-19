@@ -51,16 +51,21 @@ public class DefaultCaptchaServiceImpl extends AbstractCaptchaService {
 
     @Override
     public CaptchaVO get(CaptchaGetDTO getDTO) {
-        VUtils.isBlank(getDTO.getCaptchaType()).throwMessage(ParameterErrorCode.NULL_ERROR, "captchaType");
-        VUtils.isTrue(captchaType().equals(getDTO.getCaptchaType())).throwMessage(ParameterErrorCode.INVALID_ERROR, "captchaType");
+        VUtils.isBlank(getDTO.getCaptchaType())
+                .throwMessage(ParameterErrorCode.NULL_ERROR, "captchaType");
+        VUtils.isTrue(captchaType().equals(getDTO.getCaptchaType()))
+                .throwMessage(ParameterErrorCode.INVALID_VALUE, "captchaType");
         return getService(getDTO.getCaptchaType()).get(getDTO);
     }
 
     @Override
     public CaptchaVO check(CaptchaCheckDTO checkDTO) {
-        VUtils.isBlank(checkDTO.getCaptchaType()).throwMessage(ParameterErrorCode.NULL_ERROR, "captchaType");
-        VUtils.isBlank(checkDTO.getToken()).throwMessage(ParameterErrorCode.NULL_ERROR, "token");
-        VUtils.isTrue(captchaType().equals(checkDTO.getCaptchaType())).throwMessage(ParameterErrorCode.INVALID_ERROR, "captchaType");
+        VUtils.isBlank(checkDTO.getCaptchaType())
+                .throwMessage(ParameterErrorCode.NULL_ERROR, "captchaType");
+        VUtils.isBlank(checkDTO.getToken())
+                .throwMessage(ParameterErrorCode.NULL_ERROR, "token");
+        VUtils.isTrue(captchaType().equals(checkDTO.getCaptchaType()))
+                .throwMessage(ParameterErrorCode.INVALID_VALUE, "captchaType");
         return getService(checkDTO.getCaptchaType()).check(checkDTO);
     }
 
@@ -76,7 +81,7 @@ public class DefaultCaptchaServiceImpl extends AbstractCaptchaService {
             CaptchaServiceFactory.getCache(cacheType).delete(codeKey);
         } catch (Exception e) {
             logger.error("验证码坐标解析失败", e);
-            throw new BizException(CaptchaErrorCode.CAPTCHA_CHECK_ERROR, e.getMessage());
+            throw new BizException(CaptchaErrorCode.CAPTCHA_FAILED, e.getMessage());
         }
     }
 

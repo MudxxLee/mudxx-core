@@ -119,7 +119,7 @@ public class ClickWordCaptchaServiceImpl extends AbstractCaptchaService {
         } catch (Exception e) {
             logger.error("验证码坐标解析失败", e);
             afterValidateFail(checkDTO.getBrowserInfo());
-            throw new BizException(CaptchaErrorCode.CAPTCHA_CHECK_ERROR, e.getMessage());
+            throw new BizException(CaptchaErrorCode.CAPTCHA_FAILED, e.getMessage());
         }
         for (int i = 0; i < point.size(); i++) {
             if (point.get(i).x - HAN_ZI_SIZE > point1.get(i).x
@@ -127,7 +127,7 @@ public class ClickWordCaptchaServiceImpl extends AbstractCaptchaService {
                     || point.get(i).y - HAN_ZI_SIZE > point1.get(i).y
                     || point1.get(i).y > point.get(i).y + HAN_ZI_SIZE) {
                 afterValidateFail(checkDTO.getBrowserInfo());
-                throw new BizException(CaptchaErrorCode.CAPTCHA_CHECK_ERROR);
+                throw new BizException(CaptchaErrorCode.CAPTCHA_FAILED);
             }
         }
         //校验成功，将信息存入缓存
@@ -138,7 +138,7 @@ public class ClickWordCaptchaServiceImpl extends AbstractCaptchaService {
         } catch (Exception e) {
             logger.error("AES加密失败", e);
             afterValidateFail(checkDTO.getBrowserInfo());
-            throw new BizException(CaptchaErrorCode.CAPTCHA_CHECK_ERROR, e.getMessage());
+            throw new BizException(CaptchaErrorCode.CAPTCHA_FAILED, e.getMessage());
         }
         String secondKey = String.format(REDIS_SECOND_CAPTCHA_KEY, value);
         CaptchaServiceFactory.getCache(cacheType).set(secondKey, checkDTO.getToken(), EXPIRES_THREE);
@@ -159,7 +159,7 @@ public class ClickWordCaptchaServiceImpl extends AbstractCaptchaService {
             CaptchaServiceFactory.getCache(cacheType).delete(codeKey);
         } catch (Exception e) {
             logger.error("验证码坐标解析失败", e);
-            throw new BizException(CaptchaErrorCode.CAPTCHA_CHECK_ERROR, e.getMessage());
+            throw new BizException(CaptchaErrorCode.CAPTCHA_FAILED, e.getMessage());
         }
     }
 

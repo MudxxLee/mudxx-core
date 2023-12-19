@@ -18,6 +18,9 @@
         <module>mudxx-common-web</module>
         <module>mudxx-common-utils</module>
         <module>mudxx-common-exception</module>
+        <module>mudxx-common-thread-pool</module>
+        <module>mudxx-common-api</module>
+        <module>mudxx-common-web-security</module>
     </modules>
 
     <properties>
