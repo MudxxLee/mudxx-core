@@ -46,4 +46,9 @@ public class RedisLuaScript {
      */
     public static final RedisScript<Boolean> DECR_EXP_REDIS_SCRIPT = new DefaultRedisScript<>(RedisLuaConstants.DECR_EXP_SCRIPT, Boolean.class);
 
+    /**
+     * 自增备份脚本(过期设置)
+     */
+    public static final RedisScript<Long> INCR_BAK_REDIS_SCRIPT = new DefaultRedisScript<>(RedisLuaConstants.INCR_BAK_SCRIPT, Long.class);
+
 }

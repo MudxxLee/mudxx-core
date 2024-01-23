@@ -1,7 +1,14 @@
 package com.mudxx.common.utils.id;
 
+import java.lang.management.ManagementFactory;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+
 /**
  * 雪花算法
+ *
  * @author laiw
  * @date 2023/4/28 17:46
  */
@@ -11,7 +18,13 @@ public class SnowflakeIdGenerator {
     /**
      * 开始时间截 (2000-01-01，一旦确定不可更改，否则时间被回调，或者改变，可能会造成id重复或冲突)
      */
-    private final long twepoch = 946656000000L;
+    private final long twepoch = LocalDateTime.of(2000, 1, 1, 0, 0, 0, 0)
+            .atZone(ZoneOffset.systemDefault()).toInstant().toEpochMilli();
+
+    /**
+     * 序列在id中占的位数
+     */
+    private final long sequenceBits = 12L;
 
     /**
      * 机器id所占的位数
@@ -24,21 +37,6 @@ public class SnowflakeIdGenerator {
     private final long datacenterIdBits = 5L;
 
     /**
-     * 支持的最大机器id，结果是31 (这个移位算法可以很快的计算出几位二进制数所能表示的最大十进制数)
-     */
-    private final long maxWorkerId = ~(-1L << workerIdBits);
-
-    /**
-     * 支持的最大数据标识id，结果是31
-     */
-    private final long maxDatacenterId = ~(-1L << datacenterIdBits);
-
-    /**
-     * 序列在id中占的位数
-     */
-    private final long sequenceBits = 12L;
-
-    /**
      * 机器ID向左移12位
      */
     private final long workerIdShift = sequenceBits;
@@ -49,7 +47,7 @@ public class SnowflakeIdGenerator {
     private final long datacenterIdShift = sequenceBits + workerIdBits;
 
     /**
-     * 时间截向左移22位(5+5+12)
+     * 时间截向左移22位(12+5+5)
      */
     private final long timestampLeftShift = sequenceBits + workerIdBits + datacenterIdBits;
 
@@ -57,6 +55,16 @@ public class SnowflakeIdGenerator {
      * 生成序列的掩码，这里为4095 (0b111111111111=0xfff=4095)
      */
     private final long sequenceMask = ~(-1L << sequenceBits);
+
+    /**
+     * 支持的最大机器id，结果是31 (这个移位算法可以很快的计算出几位二进制数所能表示的最大十进制数)
+     */
+    private final long maxWorkerId = ~(-1L << workerIdBits);
+
+    /**
+     * 支持的最大数据标识id，结果是31
+     */
+    private final long maxDatacenterId = ~(-1L << datacenterIdBits);
 
     /**
      * 工作机器ID(0~31)
@@ -82,11 +90,10 @@ public class SnowflakeIdGenerator {
 
     /**
      * 构造函数
-     *
      */
     public SnowflakeIdGenerator() {
-        this.workerId = 0L;
-        this.datacenterId = 0L;
+        this.datacenterId = getDatacenterId(maxDatacenterId);
+        this.workerId = getMaxWorkerId(datacenterId, maxWorkerId);
     }
 
     /**
@@ -179,21 +186,68 @@ public class SnowflakeIdGenerator {
         return String.valueOf(sf.nextId());
     }
 
+
+    /**
+     * <p>
+     * 获取 maxWorkerId
+     * </p>
+     */
+    protected static long getMaxWorkerId(long datacenterId, long maxWorkerId) {
+        StringBuilder mpid = new StringBuilder();
+        mpid.append(datacenterId);
+        String name = ManagementFactory.getRuntimeMXBean().getName();
+        if (!name.isEmpty()) {
+            /*
+             * GET jvmPid
+             */
+            mpid.append(name.split("@")[0]);
+        }
+        /*
+         * MAC + PID 的 hashcode 获取16个低位
+         */
+        return (mpid.toString().hashCode() & 0xffff) % (maxWorkerId + 1);
+    }
+
+    /**
+     * <p>
+     * 数据标识id部分
+     * </p>
+     */
+    protected static long getDatacenterId(long maxDatacenterId) {
+        long id = 0L;
+        try {
+            InetAddress ip = InetAddress.getLocalHost();
+            NetworkInterface network = NetworkInterface.getByInetAddress(ip);
+            if (network == null) {
+                id = 1L;
+            } else {
+                byte[] mac = network.getHardwareAddress();
+                id = ((0x000000FF & (long) mac[mac.length - 1])
+                        | (0x0000FF00 & (((long) mac[mac.length - 2]) << 8))) >> 6;
+                id = id % (maxDatacenterId + 1);
+            }
+        } catch (Exception e) {
+            System.out.println(" getDatacenterId: " + e.getMessage());
+        }
+        return id;
+    }
+
+
     //=========================================Test=========================================
 
     /**
      * 测试
      */
     public static void main(String[] args) {
-//        SnowflakeIdGenerator idWorker = new SnowflakeIdGenerator(1, 20);
-//        for (int i = 0; i < 100; i++) {
-//            long id = idWorker.nextId();
-//            System.out.println(id);
-//        }
-
+        SnowflakeIdGenerator idWorker = new SnowflakeIdGenerator(5, 5);
         for (int i = 0; i < 50; i++) {
-            String id = SnowflakeIdGenerator.getSnowId();
+            long id = idWorker.nextId();
             System.out.println(id);
         }
+
+//        for (int i = 0; i < 50; i++) {
+//            String id = SnowflakeIdGenerator.getSnowId();
+//            System.out.println(id);
+//        }
     }
 }

@@ -1165,5 +1165,8 @@ public class MapUtil {
 	public static <K, V> Boolean isNotBlank(Map<K, V> map) {
 		return !isBlank(map);
 	}
-	
+
+	public static void main(String[] args) {
+		System.out.println(mapStringToMap("{gmt_create=2024-01-15 14:28:26, charset=UTF-8, gmt_payment=2024-01-15 14:28:38, notify_time=2024-01-15 14:28:39, subject=agilewing, sign=UohRLgIFWjx+DiyT8mpY+RqzwvfXc24HFcSoB4bSuuexx5pb6Z+GoRpZoqhmceyXgXpIaPxpudJ3xAeYzLIVGWQn5F4Y7MkQOYu6i8dV9fhMQzmBDyv0+SjbswfumJvD1XHMg+iz7tYZCI/8Lrc16c4PVD0+SaEWLlz9Mi1T054+jA81pQ2Y96r74phr0pQVcNobGueVJDCyFrs5irYSP9dm7schCAUPAJsjni4tlZWJZgiwE7mU4iG03+N1dsQpafjFvPdlg/jsuGCfW4sS7lovzRXA6KWwVJmNrFz7dWVqhAQjDNYyFUB6cqqxLjHoTR2IBD0ID1Eglp+8LK+CJQ==, buyer_id=2088721025368419, invoice_amount=0.05, version=1.0, notify_id=2024011501222142839168410501875020, fund_bill_list=[{\"amount\":\"0.05\",\"fundChannel\":\"ALIPAYACCOUNT\"}], notify_type=trade_status_sync, out_trade_no=P-11051E00072903, total_amount=0.05, trade_status=TRADE_SUCCESS, trade_no=2024011522001468410501821436, auth_app_id=9021000133698136, receipt_amount=0.05, point_amount=0.00, buyer_pay_amount=0.05, app_id=9021000133698136, sign_type=RSA2, seller_id=2088721028138804}"));
+	}
 }

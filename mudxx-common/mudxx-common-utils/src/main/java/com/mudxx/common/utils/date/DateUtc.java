@@ -1,5 +1,6 @@
 package com.mudxx.common.utils.date;
 
+import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
@@ -10,6 +11,8 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -61,13 +64,18 @@ public class DateUtc {
     }
 
     public static void main(String[] args) {
-        System.out.println(ZoneId.systemDefault());
-        DateTime dateTime = DateUtil.parseUTC("2023-12-17T11:00:00Z");
-        Instant instant = Instant.ofEpochMilli(dateTime.getTime());
-        ZoneId zoneId = ZoneId.of("Asia/Shanghai");
-        LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, zoneId);
-        System.out.println(localDateTime);
-        System.out.println(DateUtil.between(dateTime, new Date(), DateUnit.HOUR, true));
+//        System.out.println(ZoneId.systemDefault());
+//        DateTime dateTime = DateUtil.parseUTC("2023-12-17T11:00:00Z");
+//        Instant instant = Instant.ofEpochMilli(dateTime.getTime());
+//        ZoneId zoneId = ZoneId.of("Asia/Shanghai");
+//        LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, zoneId);
+//        System.out.println(localDateTime);
+
+        ZoneId beijingZone = ZoneId.of("Asia/Shanghai");
+        ZonedDateTime beijingTime = ZonedDateTime.now(beijingZone);
+        LocalDateTime beijingLocalTime = beijingTime.toLocalDateTime();
+        System.out.println("当前北京时间: " + beijingLocalTime.format(DateTimeFormatter.ofPattern(DatePattern.NORM_DATETIME_PATTERN)));
+
     }
 
 }

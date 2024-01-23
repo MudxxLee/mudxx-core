@@ -121,4 +121,20 @@ public class RedisLuaConstants {
             "end\n" +
             "return 1\n";
 
+    public static final String INCR_BAK_SCRIPT = "" +
+            "local BIZ_KEY = KEYS[1]\n" +
+            "local BIZ_EEXPIRE_SECOND = ARGV[1]\n" +
+            "local BAK_KEY = KEYS[2]\n" +
+            "local BIZ_EXISTS = redis.call('exists', BIZ_KEY)\n" +
+            "if BIZ_EXISTS == 0 then\n" +
+            "   local BAK_BIZ_VALUE = redis.call('hget', BAK_KEY, BIZ_KEY)\n" +
+            "   if BAK_BIZ_VALUE then\n" +
+            "       redis.call('set', BIZ_KEY, BAK_BIZ_VALUE)\n" +
+            "   end\n" +
+            "end\n" +
+            "local BIZ_INCR_VALUE = redis.call('incr', BIZ_KEY)\n" +
+            "redis.call('expire', BIZ_KEY, BIZ_EEXPIRE_SECOND)\n" +
+            "redis.call('hset', BAK_KEY, BIZ_KEY, BIZ_INCR_VALUE)\n" +
+            "return BIZ_INCR_VALUE\n";
+
 }

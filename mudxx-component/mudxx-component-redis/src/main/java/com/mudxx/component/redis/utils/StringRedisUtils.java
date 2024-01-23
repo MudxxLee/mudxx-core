@@ -25,6 +25,10 @@ public class StringRedisUtils {
         this.stringRedisTemplate = stringRedisTemplate;
     }
 
+    public StringRedisTemplate getStringRedisTemplate() {
+        return stringRedisTemplate;
+    }
+
     /*------------------------------------------------key相关操作------------------------------------------------*/
 
     /**
