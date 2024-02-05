@@ -13,6 +13,7 @@
         <module>mudxx-component</module>
         <module>mudxx-tool</module>
         <module>mudxx-captcha</module>
+        <module>mudxx-tool-ocr</module>
     </modules>
 
     <properties>

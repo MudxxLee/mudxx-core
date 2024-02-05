@@ -25,6 +25,10 @@ public class LocalDateTimeUtils {
                 ObjectUtils.defaultIfNull(zoneId, ZoneId.systemDefault()));
     }
 
+    public static LocalDateTime of(long epochMillis) {
+        return of(Instant.ofEpochMilli(epochMillis), ZoneId.systemDefault());
+    }
+
     public static LocalDateTime ofUtc(long epochMillis) {
         return of(Instant.ofEpochMilli(epochMillis), Z_UTC);
     }
@@ -37,8 +41,24 @@ public class LocalDateTimeUtils {
         return localDateTime.atZone(zoneId).toInstant().getEpochSecond();
     }
 
+    public static long getSecondOfUtc(LocalDateTime localDateTime) {
+        return getEpochSecond(localDateTime, Z_UTC);
+    }
+
+    public static long getSecondOfBeijing(LocalDateTime localDateTime) {
+        return getEpochSecond(localDateTime, Z_BEIJING);
+    }
+
     public static long toEpochMillis(LocalDateTime localDateTime, ZoneId zoneId) {
         return localDateTime.atZone(zoneId).toInstant().toEpochMilli();
+    }
+
+    public static long getMillisOfUtc(LocalDateTime localDateTime) {
+        return toEpochMillis(localDateTime, Z_UTC);
+    }
+
+    public static long getMillisOfBeijing(LocalDateTime localDateTime) {
+        return toEpochMillis(localDateTime, Z_BEIJING);
     }
 
     /**
@@ -80,16 +100,32 @@ public class LocalDateTimeUtils {
         return formatBeijing(localDateTime, "yyyy-MM-dd HH:mm:ss");
     }
 
+    public static Date toDateUtc(LocalDateTime localDateTime) {
+        return Date.from(localDateTime.atZone(Z_UTC).toInstant());
+    }
+
+    public static LocalDateTime getFivePointDataOfLeftClose(long epochMillis) {
+        if (String.valueOf(epochMillis).length() < 13) {
+            epochMillis = epochMillis * 1000;
+        }
+        LocalDateTime localDateTime = ofUtc(epochMillis);
+        String mm = formatUtc(localDateTime, "mm");
+        int m = Integer.parseInt(mm.substring(1));
+        if (m > 0 && m < 5) {
+            return localDateTime.minusMinutes(m);
+        }
+        if (m > 5) {
+            return localDateTime.minusMinutes(m - 5);
+        }
+        return localDateTime;
+    }
+
     public static void main(String[] args) {
-        LocalDateTime localDateTime = parseUtc("2024-01-16T09:50:00Z", "yyyy-MM-dd'T'HH:mm:ss'Z'");
-        System.out.println(getEpochSecond(localDateTime, Z_UTC));
-        System.out.println(formatUtcSssZ(localDateTime));
-
-        LocalDateTime ofBeijing = ofBeijing(toEpochMillis(localDateTime, Z_UTC));
-        System.out.println(getEpochSecond(ofBeijing, Z_BEIJING));
-        System.out.println(formatBeijingNormal(ofBeijing));
-
+        LocalDateTime localDateTime = parseUtc("2024-01-16T09:15:00Z", "yyyy-MM-dd'T'HH:mm:ss'Z'");
+        System.out.println(getFivePointDataOfLeftClose(getSecondOfUtc(localDateTime)));
     }
 
 }
+
+
 
